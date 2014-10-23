@@ -23,6 +23,9 @@ var Country			= require('./app/models/countries')
 var Contribution 	= require('./app/models/contributions')
 var Mission 		= require('./app/models/missions')
 
+// Fields to return on API query
+contribution_return_fields = 'cont_date tcc_country_id tcc_country_string tcc_continent tcc_un_region mission mission_country_id mission_country mission_continent mission_un_region fpu fpu_f fpu_m ip ip_f ip_m civpol eom eom_f eom_m observers troops troops_f troops_m total total_f total_m'
+
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -106,7 +109,7 @@ router.route('/contributions/:tcc_country_id')
 	// get all the contributions from a given country (accessed at GET http://localhost:8080/api/contributions/:country)
 	.get(function(req, res) {
 		req.params.tcc_country_id = req.params.tcc_country_id.toUpperCase();
-		Contribution.find(req.params, 'tcc_country_id troops', function(err, contribution) {
+		Contribution.find(req.params, contribution_return_fields, function(err, contribution) {
 			if(!err) {
 				res.jsonp(contribution);
 			}else{
@@ -123,7 +126,7 @@ router.route('/search')
 	.get(function(req, res) {
 		// req.params.tcc_country_id = req.params.tcc_country_id.toUpperCase();
 		// console.log(req.query);
-		Contribution.find(req.query, 'cont_date tcc_country_id tcc_country_string tcc_continent tcc_un_region mission mission_country_id mission_country mission_continent mission_un_region fpu fpu_f fpu_m ip ip_f ip_m civpol eom eom_f eom_m observers troops troops_f troops_m total total_f total_m', function(err, contribution) {
+		Contribution.find(req.query, contribution_return_fields, function(err, contribution) {
 		// Contribution.find(req.query, function(err, contribution) {
 			if(!err) {
 				res.jsonp(contribution);
