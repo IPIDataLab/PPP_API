@@ -10,7 +10,9 @@ var bodyParser  = require('body-parser');
 var mongoose	= require('mongoose');		// Create connection to mongodb
 
 // configuration
-var connect		= mongoose.connect('mongodb://localhost:27017/pppDB');
+var user = process.argv[2]
+var password = process.argv[3]
+var connect		= mongoose.connect('mongodb://'+user+':'+password+'@localhost:27017/pppDB');
 var port = process.env.PORT || 8080; 		// set our port
 var prefix = '/api';					// route prefix
 
